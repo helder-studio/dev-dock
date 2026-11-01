@@ -19,3 +19,10 @@ export const dockLabel = () => '';
 export function DevDock(_props: DevDockProps): null {
   return null;
 }
+
+export type { StorageTabOptions } from './StorageTab';
+export type { StorageEntry, StorageLike } from './storage';
+
+export function storageTab(options: { id?: string; title?: string }) {
+  return { id: options.id ?? 'storage', title: options.title ?? 'Storage', render: () => null };
+}

@@ -9,6 +9,8 @@ Shared floating dev panel for React Native QA builds; tools plug in as tabs. PDF
 
 - `src/core.ts`: `DevDockTab` type, `dockLabel`, `devDock` open/close store (no RN imports).
 - `src/DevDock.tsx`: draggable button (PanResponder + Animated) and Modal with a tab bar.
+- `src/storage.ts` + `src/StorageTab.tsx`: `storageTab({ storage, listKeys })`; storage typed
+  structurally (no dependency). Adapters can't list keys, so the user passes `listKeys`.
 - `src/noop.ts`: same API, renders nothing.
 
 ## Decisions

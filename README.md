@@ -48,6 +48,7 @@ const qa = __DEV__ || Config.QA_BUILD;
 
 - 🧲 **One draggable button**: shows every active tool's status, e.g. `🛠 flaky · Time warped: 31 Dec`
 - 🗂️ **Tabs**: each tool brings its own panel
+- 🗄️ **Storage tab**: inspect and edit MMKV, AsyncStorage or localStorage keys on device
 - 🧩 **Bring your own tool**: a tab is a plain object, no dependency on dev-dock needed
 - 🎛️ **Open from code**: `devDock.open('timewarp')` from a shake handler or your dev menu
 - 🪶 **Core React Native only**: no Reanimated or Gesture Handler peer dependency, about 1.3 kB
@@ -66,6 +67,27 @@ const featureFlagsTab: DevDockTab = {
   render: () => <FlagsPanel />,
 };
 ```
+
+## Storage tab
+
+Search, view, edit and delete stored keys on the phone, with any
+[`@helder-studio/storage`](https://github.com/helder-studio/storage) adapter (Flipper used to do
+this; it's gone from React Native).
+
+```tsx
+import { DevDock, storageTab } from '@helder-studio/dev-dock';
+import { mmkv } from '@helder-studio/storage';
+
+const storage = createMMKV();
+
+<DevDock
+  enabled={qa}
+  tabs={[storageTab({ storage: mmkv(storage), listKeys: () => storage.getAllKeys() })]}
+/>;
+// AsyncStorage: storageTab({ storage: asyncStorage(AsyncStorage), listKeys: () => AsyncStorage.getAllKeys() })
+```
+
+JSON values are pretty-printed and must stay valid JSON when edited; deleting asks for a second tap.
 
 ## API
 
