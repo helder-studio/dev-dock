@@ -1,5 +1,7 @@
 # @helder-studio/dev-dock
 
+nShared rules, commands and conventions: @AGENTS.md
+
 Shared floating dev panel for React Native QA builds; tools plug in as tabs. PDF: Phase 3
 "Extract dev-dock".
 
