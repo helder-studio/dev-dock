@@ -1,10 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
-import { devDock, dockLabel } from './core';
+import { devDock, dockLabel, sameStatuses } from './core';
 
 describe('dockLabel', () => {
   it('lists active tool statuses', () => {
     expect(dockLabel([null, null])).toBe('🛠 Dev');
     expect(dockLabel(['flaky', null, 'Time warped: 31 Dec'])).toBe('🛠 flaky · Time warped: 31 Dec');
+  });
+});
+
+describe('sameStatuses', () => {
+  it('compares by position and value', () => {
+    expect(sameStatuses(['a', null], ['a', null])).toBe(true);
+    expect(sameStatuses(['a', null], ['a', 'b'])).toBe(false);
+    expect(sameStatuses(['a'], ['a', null])).toBe(false);
   });
 });
 

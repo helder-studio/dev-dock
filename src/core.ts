@@ -20,6 +20,11 @@ export function dockLabel(statuses: (string | null)[]): string {
   return `🛠 ${active.length ? active.join(' · ') : 'Dev'}`;
 }
 
+/** Same statuses in the same order: skip the re-render. */
+export function sameStatuses(a: (string | null)[], b: (string | null)[]): boolean {
+  return a.length === b.length && a.every((s, i) => s === b[i]);
+}
+
 type DockState = { open: boolean; tabId: string | null };
 
 let state: DockState = { open: false, tabId: null };

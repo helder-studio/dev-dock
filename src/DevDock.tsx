@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { type DevDockTab, devDock, dockLabel } from './core';
+import { type DevDockTab, devDock, dockLabel, sameStatuses } from './core';
 
 export interface DevDockProps {
   /** Off: renders nothing. Pass something like `__DEV__ || Config.QA_BUILD`. */
@@ -19,17 +19,26 @@ export interface DevDockProps {
 }
 
 function useStatuses(tabs: DevDockTab[]): (string | null)[] {
-  const read = () => tabs.map((tab) => tab.status?.() ?? null);
+  const latest = useRef(tabs);
+  latest.current = tabs;
+  const read = () => latest.current.map((tab) => tab.status?.() ?? null);
   const [statuses, setStatuses] = useState(read);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: re-subscribe only when the tab list changes
+  // An inline `tabs={[...]}` array is new on every render: re-subscribe only when the ids change.
+  const ids = tabs.map((tab) => tab.id).join('|');
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `ids` stands for the tab list
   useEffect(() => {
-    const refresh = () => setStatuses(read());
+    // Tools like network-chaos notify on every request; re-render only when a status changes.
+    const refresh = () =>
+      setStatuses((prev) => {
+        const next = read();
+        return sameStatuses(prev, next) ? prev : next;
+      });
     refresh();
-    const unsubscribers = tabs.map((tab) => tab.subscribe?.(refresh));
+    const unsubscribers = latest.current.map((tab) => tab.subscribe?.(refresh));
     return () => {
       for (const unsubscribe of unsubscribers) unsubscribe?.();
     };
-  }, [tabs]);
+  }, [ids]);
   return statuses;
 }
 
