@@ -1,5 +1,11 @@
 # @helder-studio/dev-dock
 
+## 0.2.0
+
+### Minor Changes
+
+- b816e07: Add storageTab: search, view, edit and delete stored keys on device through any storage adapter.
+
 ## 0.1.0
 
 ### Minor Changes
