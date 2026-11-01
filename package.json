@@ -1,6 +1,6 @@
 {
   "name": "@helder-studio/dev-dock",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "One floating dev panel for React Native QA builds. network-chaos, timewarp and your own tools plug in as tabs.",
   "keywords": [
     "react-native",
