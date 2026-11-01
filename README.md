@@ -4,8 +4,8 @@
 
 **One floating button for all your dev tools.**
 
-A draggable dev panel for React Native QA builds. Network Chaos, Timewarp and your own tools plug in
-as tabs, and the button shows what's active.
+A draggable dev panel for React Native QA builds. Network Chaos, Timewarp, A11y Lens and your own
+tools plug in as tabs, and the button shows what's active.
 
 [![npm](https://img.shields.io/npm/v/@helder-studio/dev-dock?color=cb3837&logo=npm)](https://www.npmjs.com/package/@helder-studio/dev-dock)
 [![bundle size](https://img.shields.io/bundlejs/size/@helder-studio/dev-dock?label=min%2Bgzip)](https://bundlejs.com/?q=@helder-studio/dev-dock)
@@ -33,12 +33,14 @@ flaky and the clock is on New Year's Eve.
 import { DevDock } from '@helder-studio/dev-dock';
 import { NetworkChaos, networkChaosTab } from '@helder-studio/network-chaos';
 import { timewarpTab } from '@helder-studio/timewarp';
+import { A11yLensOverlay, a11yLensTab } from '@helder-studio/a11y-lens';
 
 const qa = __DEV__ || Config.QA_BUILD;
 
 <NetworkChaos enabled={qa} storage={storage} badge={false}>
   <App />
-  <DevDock enabled={qa} tabs={[networkChaosTab, timewarpTab]} />
+  <A11yLensOverlay />
+  <DevDock enabled={qa} tabs={[networkChaosTab, timewarpTab, a11yLensTab]} />
 </NetworkChaos>;
 ```
 
